@@ -3,8 +3,10 @@ package com.akin.libapp;
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import com.akin.libapp.model.Book;
 import com.akin.libapp.repository.BookRepository;
@@ -14,6 +16,10 @@ public class BookServiceTest {
 	@Mock
 	private BookRepository bookRepository;
 	
+	@Before
+	public void steup() {
+		MockitoAnnotations.initMocks(this);
+	}
 	
 	@Test
 	public void addBook_success() {

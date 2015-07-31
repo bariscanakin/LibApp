@@ -46,7 +46,7 @@ public class BookControllerTest {
 
 	@Test
 	public void delete_sucess() throws Exception {
-		mockMvc.perform(delete("/book?id=123")).andDo(print());
+		mockMvc.perform(delete("/books/123"));
 		verify(bookService).deleteBook("123");
 	}
 
@@ -54,9 +54,8 @@ public class BookControllerTest {
 	public void getById_success() throws Exception {
 		Book book = new Book("123", "title", "author");
 		when(bookService.getBookById("123")).thenReturn(book);
-		mockMvc.perform(get("/book?id=123")).andExpect(jsonPath("$.success", is(true)))
-				.andExpect(jsonPath("$.data.title", is("title"))).andExpect(jsonPath("$.data.author", is("author")))
-				.andDo(print());
+		mockMvc.perform(get("/books/123")).andExpect(jsonPath("$.success", is(true)))
+				.andExpect(jsonPath("$.data.title", is("title"))).andExpect(jsonPath("$.data.author", is("author")));
 	}
 
 	@Test
@@ -64,7 +63,8 @@ public class BookControllerTest {
 		List<Book> bookList = new ArrayList<>();
 		bookList.add(new Book("title", "author"));
 		when(bookService.getAllBooks()).thenReturn(bookList);
-		mockMvc.perform(get("/book/getAll")).andExpect(jsonPath("$[0].title", is("title")))
-				.andExpect(jsonPath("$[0].author", is("author"))).andDo(print());
+		mockMvc.perform(get("/books")).andExpect(jsonPath("$.success", is(true)))
+				.andExpect(jsonPath("$.data[0].title", is("title")))
+				.andExpect(jsonPath("$.data[0].author", is("author")));
 	}
 }
